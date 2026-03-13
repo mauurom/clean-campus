@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Limpiador de Campus UTN",
+  "version": "1.1",
+  "description": "Mejora tu experiencia en el Campus UTN ocultando las materias ya cursadas con un diseño moderno y minimalista.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://campus.frsr.utn.edu.ar/moodle/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
