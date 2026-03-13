@@ -5,7 +5,6 @@ Extensión para Google Chrome diseñada para ocultar asignaturas completadas o i
 ## Características
 
 - **Gestión visual del tablero:** Permite ocultar tarjetas de cursos desde la vista principal de Moodle para reducir el ruido visual.
-- **Rendimiento optimizado:** Utiliza un `MutationObserver` con manejo de concurrencia y retraso (*debounce*) para operar sobre el DOM dinámico de Moodle sin impacto negativo en la carga original de la página.
 - **Interfaz no intrusiva:** La interfaz inyectada se acopla estructuralmente a las tarjetas de curso existentes mediante estilización CSS encapsulada.
 - **Administración centralizada:** Incluye un menú (modal) para restaurar asignaturas individuales o deshacer las acciones de forma masiva.
 - **Estado local persistente:** Hace uso de la API `chrome.storage.local` para guardar las preferencias directamente en el navegador local, garantizando la privacidad sin depender de servidores externos.
@@ -26,7 +25,3 @@ La funcionalidad estará disponible en la próxima actualización de la pestaña
 - `manifest.json`: Configurado para Manifest V3. Define la meta-información, los scripts a inyectar y los permisos requeridos (`storage`).
 - `content.js`: Script de contenido central. Contiene la clase `UTNCampusCleaner`, encargada de evaluar el estado del DOM, inyectar los controladores asíncronamente y sincronizar estados con la API de Chrome.
 - `styles.css`: Hoja de estilos complementaria. Emplea variables CSS y animaciones parametrizadas para la superposición de los botones y los cuadros modales.
-
-## Compatibilidad
-
-El DOM de Moodle varía considerablemente según el tema (*Theme*) instalado en cada institución. Esta extensión orienta sus selectores (`.coursebox`, `.cimbox`, `.panel-body`) y nodos de inyección a la estructura existente en la plataforma de la UTN-FRSR. Su viabilidad en otras instalaciones de Moodle está sujeta a la similitud estructural con dicha instancia.
