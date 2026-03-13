@@ -1,34 +1,32 @@
-# Limpiador de Campus UTN 🎓
+# UTN Campus Cleaner
 
-Una extensión de navegador moderna, ligera y nativa para limpiar visualmente las asignaturas aprobadas de tu tablero principal en Moodle (Diseñada específicamente para el **Campus UTN Facultad Regional San Rafael**).
+Extensión para Google Chrome diseñada para ocultar asignaturas completadas o inactivas en el tablero principal de Moodle. Optimizada específicamente para el entorno virtual de la Universidad Tecnológica Nacional, Facultad Regional San Rafael (UTN-FRSR).
 
-## ✨ Características
+## Características
 
-- **Ocultamiento de Asignaturas Cursadas**: Remueve discretamente de tu "dashboard" visual los cursos y aulas virtuales que ya no te interesan.
-- **Diseño Premium**: Arquitectura puramente orientada a objetos que se inyecta con CSS moderno, modo *Glassmorphism* y suavizado de *transiciones fluidas* que se mimetiza con el Moodle Universitario de la UTN-FRSR.
-- **Botón Discreto Integrado**: Inyector de diseño sutil (`Hover State`) en la misma tarjeta curricular, para evitar menoscabar la experiencia nativa del tablero.
-- **Panel de Control (FAB)**: Botón de gestión flotante accesible desde cualquier lugar para "Restaurar" asignaturas de inmediato o "Restaurar todas" con un solo clic.
+- **Gestión visual del tablero:** Permite ocultar tarjetas de cursos desde la vista principal de Moodle para reducir el ruido visual.
+- **Rendimiento optimizado:** Utiliza un `MutationObserver` con manejo de concurrencia y retraso (*debounce*) para operar sobre el DOM dinámico de Moodle sin impacto negativo en la carga original de la página.
+- **Interfaz no intrusiva:** La interfaz inyectada se acopla estructuralmente a las tarjetas de curso existentes mediante estilización CSS encapsulada.
+- **Administración centralizada:** Incluye un menú (modal) para restaurar asignaturas individuales o deshacer las acciones de forma masiva.
+- **Estado local persistente:** Hace uso de la API `chrome.storage.local` para guardar las preferencias directamente en el navegador local, garantizando la privacidad sin depender de servidores externos.
 
----
+## Instalación (Modo Desarrollador)
 
-## 🚀 Instalación en Modo Desarrollador (Google Chrome)
+Dado que la extensión aún no se publica en la Chrome Web Store, la instalación debe realizarse de forma manual:
 
-Al no encontrarse aún en la Chrome Web Store, puedes usar esta extensión descargándola e instalándola manualmente en tres simples pasos:
+1. Descargar el código fuente de este repositorio y extraerlo en un directorio local.
+2. Abrir el navegador Google Chrome y navegar a la URL: `chrome://extensions/`.
+3. Habilitar el **Modo desarrollador** (interruptor ubicado en la esquina superior derecha).
+4. Hacer clic en el botón **Cargar descomprimida** y seleccionar el directorio raíz del proyecto (la carpeta que contiene el archivo `manifest.json`).
 
-1. **Descarga el Proyecto**: Clona o descarga `.zip` de este repositorio en tu computadora. Descomprime la carpeta si descargaste el zip.
-2. **Abre el Gestor de Extensiones**: Escribe `chrome://extensions/` en la barra de direcciones de tu navegador Chrome.
-3. **Activar e Instalar**: Asegúrate de tener encendido el **Modo Productor/Desarrollador** (arriba a la derecha). Posteriormente, pulsa el botón *"Cargar descomprimida"* y selecciona la carpeta **raíz** (`clean-campus`) donde está el archivo `manifest.json`.
+La funcionalidad estará disponible en la próxima actualización de la pestaña del campus virtual.
 
-¡Y listo! Ya aparecerá y se activará sola en tu próximo inicio de sesión del Moodle UTN-FRSR.
+## Estructura del Proyecto
 
----
+- `manifest.json`: Configurado para Manifest V3. Define la meta-información, los scripts a inyectar y los permisos requeridos (`storage`).
+- `content.js`: Script de contenido central. Contiene la clase `UTNCampusCleaner`, encargada de evaluar el estado del DOM, inyectar los controladores asíncronamente y sincronizar estados con la API de Chrome.
+- `styles.css`: Hoja de estilos complementaria. Emplea variables CSS y animaciones parametrizadas para la superposición de los botones y los cuadros modales.
 
-## 🔧 Archivos y Arquitectura
+## Compatibilidad
 
-* `manifest.json`: (V3) Gestiona permisos básicos únicamente de `storage` local (sin conexión externa ni bases de datos), volviéndola totalmente privada.
-* `content.js`: Inyector del motor de gestión y arquitectura Orientada a Objetos en JS. Evita la sobre-ejecución del Moodle gracias a un *debounce MutationObserver* altamente texturizado.
-* `styles.css`: Estilado modular utilizando variables de CSS puras (`:root`) para mimetizarse fluidamente en el campus con transiciones *Spring-bounce*.
-
-## 📌 Limitaciones (A tener en cuenta)
-
-Esta extensión lee el `DOM` HTML específico del tema actual (Theme) del **Campus UTN (FRSR)**. Aunque puede que funcione en otros Moodle dependiendo de las clases de bootstrap y HTML sub-estructural (`.coursebox`, `.cimbox`, `.panel-body`), no se garantiza su compatibilidad visual al 100% con temas distintos a los estandarizados (como *Boost* o *Academi*).
+El DOM de Moodle varía considerablemente según el tema (*Theme*) instalado en cada institución. Esta extensión orienta sus selectores (`.coursebox`, `.cimbox`, `.panel-body`) y nodos de inyección a la estructura existente en la plataforma de la UTN-FRSR. Su viabilidad en otras instalaciones de Moodle está sujeta a la similitud estructural con dicha instancia.
